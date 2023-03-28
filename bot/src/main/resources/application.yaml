@@ -1,2 +1,10 @@
 app:
   test: hello-bot
+
+springdoc:
+  swagger-ui:
+    path: "swagger-ui"
+
+management:
+  server:
+    port: 8080
