@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws MalformedURLException {
-
         Scanner in = new Scanner(System.in);
         System.out.println("Введите ссылку: ");
         String url = in.nextLine();
