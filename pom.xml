@@ -22,10 +22,19 @@
         <spring-boot.version>3.0.1</spring-boot.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <springdoc-openapi.version>2.0.2</springdoc-openapi.version>
+        <testcontainers.version>1.17.6</testcontainers.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>${testcontainers.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
