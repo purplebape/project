@@ -8,10 +8,12 @@
     <artifactId>project</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
+
     <modules>
         <module>bot</module>
         <module>scrapper</module>
         <module>link-parser</module>
+        <module>scrapper-jooq</module>
     </modules>
 
     <properties>
@@ -21,7 +23,6 @@
         <spring-cloud.version>2022.0.0</spring-cloud.version>
         <spring-boot.version>3.0.1</spring-boot.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
-        <springdoc-openapi.version>2.0.2</springdoc-openapi.version>
         <testcontainers.version>1.17.6</testcontainers.version>
     </properties>
 
@@ -57,18 +58,30 @@
                 <version>23.1.0</version>
                 <scope>provided</scope>
             </dependency>
-
-            <dependency>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-                <version>${springdoc-openapi.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <configuration>
+                        <argLine>--enable-preview</argLine>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <configuration>
+                        <argLine>--enable-preview</argLine>
+                    </configuration>
+                </plugin>
+
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
@@ -101,20 +114,13 @@
                     <configuration>
                         <release>17</release>
                         <parameters>true</parameters>
+                        <source>17</source>
+                        <target>17</target>
+                        <compilerArgs>--enable-preview</compilerArgs>
                     </configuration>
                 </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-failsafe-plugin</artifactId>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                </plugin>
-
             </plugins>
         </pluginManagement>
     </build>
+
 </project>

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.tinkoff.edu.java.bot.webService.ScrapperWebService;
+import ru.tinkoff.edu.java.parser.linkData.LinkData;
+import ru.tinkoff.edu.java.parser.linkHandler.ChainLinkHandler;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,16 +18,19 @@ import java.util.regex.Pattern;
 @Component
 public class UntrackCommand extends AbstractPublicCommand {
     private final ScrapperWebService webService;
+    private final ChainLinkHandler linkHandler;
 
     private static final String COMMAND = "/untrack";
     private static final String DESCRIPTION = "прекратить отслеживание ссылки";
     private static final Pattern PATTERN = Pattern.compile("^\\s*/untrack (\\S+)\\s*$");
     private static final String SUCCESS_RESPONSE = "Ссылка удалена из списка.";
-    private static final String WRONG_FORMAT_RESPONSE = "Используйте правильный формат: /untrack <link>";
+    private static final String WRONG_FORMAT_RESPONSE = "Используйте правильный формат: /untrack <ссылка>";
+    private static final String WRONG_LINK_FORMAT_RESPONSE = "Вы можете использовать только ссылки репозиториев GitHub и ссылки вопросов StackOverflow";
 
-    public UntrackCommand(ScrapperWebService webService) {
+    public UntrackCommand(ScrapperWebService webService, ChainLinkHandler linkHandler) {
         super(COMMAND, DESCRIPTION);
         this.webService = webService;
+        this.linkHandler = linkHandler;
     }
 
     @Override
@@ -36,8 +41,12 @@ public class UntrackCommand extends AbstractPublicCommand {
             return new SendMessage(message.getChatId().toString(), WRONG_FORMAT_RESPONSE);
         }
         String url = matcher.group(1);
+        LinkData linkData = linkHandler.handle(url);
+        if (linkData == null) {
+            return new SendMessage(message.getChatId().toString(), WRONG_LINK_FORMAT_RESPONSE);
+        }
         log.info("Ссылка удалена {}", url);
-        webService.createLink(message.getChatId(), url);
+        webService.deleteLink(message.getChatId(), url);
         return new SendMessage(message.getChatId().toString(), SUCCESS_RESPONSE);
     }
 
@@ -46,5 +55,3 @@ public class UntrackCommand extends AbstractPublicCommand {
         return message.getText().trim().startsWith(COMMAND);
     }
 }
-
-
