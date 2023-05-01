@@ -1,46 +1,59 @@
 package ru.tinkoff.edu.java.scrapper.configuration;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.validation.annotation.Validated;
-
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableScheduling;
-
+import org.springframework.validation.annotation.Validated;
+import ru.tinkoff.edu.java.parser.ParserConfig;
 import java.time.Duration;
 
 @EnableScheduling
 @Validated
-@Getter
-@Setter
+@Data
 @ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
 @Configuration
+@Import(value = {ParserConfig.class})
 public class ApplicationConfig {
-    @NotNull private String test;
-    @NotNull private Scheduler scheduler;
-    @NotNull private GitHub gitHub;
-    @NotNull private StackOverflow stackOverflow;
+    @NotNull
+    private Scheduler scheduler;
+    @NotNull
+    private GitHub gitHub;
+    @NotNull
+    private StackOverflow stackOverflow;
+    @NotNull
+    private Bot bot;
 
     @Validated
-    @Getter
-    @Setter
+    @Data
     public static class Scheduler {
-        @NotNull private Duration interval;
+        @NotNull
+        private Duration interval;
+        @NotNull
+        private Duration linkToBeCheckedInterval;
     }
 
     @Validated
-    @Getter
-    @Setter
+    @Data
     public static class GitHub {
-        @NotNull private String url = "https://api.github.com";
+        @NotBlank
+        private String url = "https://api.github.com";
     }
 
     @Validated
-    @Getter
-    @Setter
+    @Data
     public static class StackOverflow {
-        @NotNull private String url = "https://api.stackoverflow.com/2.3";
+        @NotBlank
+        private String url = "https://stackoverflow.com/2.3";
+    }
+
+    @Validated
+    @Data
+    public static class Bot {
+        @NotBlank
+        private String url;
     }
 }

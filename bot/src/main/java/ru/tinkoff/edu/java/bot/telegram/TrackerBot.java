@@ -11,6 +11,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.commands.BotCommand;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.tinkoff.edu.java.bot.configuration.ApplicationConfig;
+import ru.tinkoff.edu.java.bot.exception.SendingMessageException;
+import ru.tinkoff.edu.java.bot.model.controller.LinkUpdateRequest;
 import ru.tinkoff.edu.java.bot.telegram.commands.AbstractPublicCommand;
 
 import java.util.List;
@@ -40,7 +42,7 @@ public class TrackerBot extends TelegramLongPollingBot {
         try {
             this.execute(setMyCommands);
         } catch (TelegramApiException e) {
-            log.error("Не удалось установить команды из-за ошибки: {}", e.getMessage());
+            log.error("Failed to set commands due to error: {}", e.getMessage());
         }
     }
 
@@ -52,7 +54,7 @@ public class TrackerBot extends TelegramLongPollingBot {
             try {
                 execute(sendMessage);
             } catch (TelegramApiException e) {
-                log.error("Не удалось отправить сообщение из-за ошибки: {}", e.getMessage());
+                log.error("Failed to send message due to error: {}", e.getMessage());
             }
         }
     }
@@ -60,5 +62,22 @@ public class TrackerBot extends TelegramLongPollingBot {
     @Override
     public String getBotUsername() {
         return config.getBot().getName();
+    }
+
+    public void sendUpdates(LinkUpdateRequest updates) {
+        String message = "New updates from: " + updates.url() + "\n" + updates.description();
+        updates.tgChatsIds().forEach(id -> sendMessage(id, message));
+    }
+
+    private void sendMessage(Long chatId, String text) {
+        try {
+            SendMessage sendMessage = SendMessage.builder()
+                    .chatId(chatId)
+                    .text(text)
+                    .build();
+            this.execute(sendMessage);
+        } catch (TelegramApiException e) {
+            throw new SendingMessageException(chatId, e);
+        }
     }
 }

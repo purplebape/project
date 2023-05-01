@@ -1,5 +1,5 @@
 package ru.tinkoff.edu.java.scrapper.model.controller;
 
-public record AddLinkRequest(
-        String link
-) {}
+import jakarta.validation.constraints.NotBlank;
+
+public record AddLinkRequest(@NotBlank String link) {}

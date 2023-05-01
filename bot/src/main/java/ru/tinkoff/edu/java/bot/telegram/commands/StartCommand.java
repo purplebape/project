@@ -19,20 +19,12 @@ public class StartCommand implements Command {
 
     @Override
     public SendMessage handle(@NotNull Message message) {
-        try {
-            webService.createChat(message.getChatId());
-            return new SendMessage(message.getChatId().toString(), WELCOME_MESSAGE);
-        } catch (Exception e) {
-            throw new RuntimeException("Ошибка при создании нового чата", e);
-        }
+        webService.createChat(message.getChatId());
+        return new SendMessage(message.getChatId().toString(), WELCOME_MESSAGE);
     }
 
     @Override
     public boolean supports(@NotNull Message message) {
-        try {
-            return message.getText().trim().startsWith(COMMAND);
-        } catch (Exception e) {
-            return false;
-        }
+        return message.getText().trim().startsWith(COMMAND);
     }
 }

@@ -1,10 +1,13 @@
 package ru.tinkoff.edu.java.bot.telegram.commands;
 
 import jakarta.validation.constraints.NotNull;
+import org.apache.logging.log4j.util.Strings;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
+import java.util.List;
 
 @Component
 @Order(1)
@@ -12,26 +15,24 @@ public class HelpCommand extends AbstractPublicCommand {
     private static final String COMMAND = "/help";
     private static final String DESCRIPTION = "показать список команд";
 
-    public HelpCommand() {
+    private final List<String> commandsDescription;
+
+    public HelpCommand(@Lazy List<AbstractPublicCommand> publicCommands) {
         super(COMMAND, DESCRIPTION);
+        commandsDescription = publicCommands
+                .stream()
+                .map(c -> c.getCommand() + " - " + c.getDescription())
+                .toList();
     }
 
     @Override
     public SendMessage handle(@NotNull Message message) {
-        StringBuilder commandList = new StringBuilder();
-        commandList.append("/start - зарегистрировать пользователя\n")
-                .append("/help - вывести окно с командами\n")
-                .append("/track - начать отслеживание ссылки\n")
-                .append("/untrack - прекратить отслеживание ссылки\n")
-                .append("/list - показать список отслеживаемых ссылок");
-        return new SendMessage(message.getChatId().toString(), commandList.toString());
+        return new SendMessage(message.getChatId().toString(),
+                "Описание команд: \n" + Strings.join(commandsDescription, '\n'));
     }
 
     @Override
     public boolean supports(@NotNull Message message) {
-        String text = message.getText().trim();
-        return text.startsWith(COMMAND);
+        return message.getText().trim().startsWith(COMMAND);
     }
-
 }
-

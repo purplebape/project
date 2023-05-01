@@ -1,10 +1,10 @@
 app:
-  test: hello-bot
+  test: 42
   bot:
     name: "projectink_bot"
     token: ${BOT_TOKEN}
   scrapper:
-    url: "localhost"
+    url: "http://localhost:8080"
 
 springdoc:
   swagger-ui:
@@ -13,3 +13,6 @@ springdoc:
 management:
   server:
     port: 8080
+
+server:
+  port: 8083

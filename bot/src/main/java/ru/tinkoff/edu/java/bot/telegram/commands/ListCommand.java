@@ -20,7 +20,8 @@ public class ListCommand extends AbstractPublicCommand {
 
     private static final String COMMAND = "/list";
     private static final String DESCRIPTION = "показать список отслеживаемых ссылок";
-    private static final String EMPTY_LINKS_LIST_MESSAGE = "Отслеживаемых ссылок ещё нет.";
+    private static final String EMPTY_LINKS_LIST_MESSAGE =
+            "Отслеживаемых ссылок ещё нет. Введите /track <ссылка> для добавления.";
 
     public ListCommand(ScrapperWebService webService) {
         super(COMMAND, DESCRIPTION);
@@ -40,15 +41,15 @@ public class ListCommand extends AbstractPublicCommand {
     }
 
     private String getFormattedText(ListLinksResponse response) {
-        List<String> links = response.links()
+        List<String> links = response
+                .links()
                 .stream()
                 .map(LinkResponse::link)
                 .map(URI::toString)
                 .toList();
-        return "Список отслеживаемых ссылок: \n"
-                + links.stream()
+        return "Список текущих отслеживаемых ссылок: \n" + links
+                .stream()
                 .map(link -> "- " + link)
                 .collect(Collectors.joining("\n"));
     }
 }
-

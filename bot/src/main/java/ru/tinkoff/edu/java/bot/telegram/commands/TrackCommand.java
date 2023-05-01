@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.tinkoff.edu.java.bot.webService.ScrapperWebService;
+import ru.tinkoff.edu.java.parser.linkData.LinkData;
+import ru.tinkoff.edu.java.parser.linkHandler.ChainLinkHandler;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,15 +18,19 @@ import java.util.regex.Pattern;
 @Component
 public class TrackCommand extends AbstractPublicCommand {
     private final ScrapperWebService webService;
+    private final ChainLinkHandler linkHandler;
+
     private static final String COMMAND = "/track";
     private static final String DESCRIPTION = "начать отслеживание ссылки";
     private static final Pattern PATTERN = Pattern.compile("^\\s*/track (\\S+)\\s*$");
     private static final String SUCCESS_RESPONSE = "Ссылка добавлена в список.";
-    private static final String WRONG_FORMAT_RESPONSE = "Используйте правильный формат: /track <link>";
+    private static final String WRONG_FORMAT_RESPONSE = "Используйте правильный формат: /track <ссылка>";
+    private static final String WRONG_LINK_FORMAT_RESPONSE = "Вы можете использовать только ссылки репозиториев GitHub и ссылки вопросов StackOverflow";
 
-    public TrackCommand(ScrapperWebService webService) {
+    public TrackCommand(ScrapperWebService webService, ChainLinkHandler linkHandler) {
         super(COMMAND, DESCRIPTION);
         this.webService = webService;
+        this.linkHandler = linkHandler;
     }
 
     @Override
@@ -35,7 +41,11 @@ public class TrackCommand extends AbstractPublicCommand {
             return new SendMessage(message.getChatId().toString(), WRONG_FORMAT_RESPONSE);
         }
         String url = matcher.group(1);
-        log.info("Создана ссылка {}", url);
+        LinkData linkData = linkHandler.handle(url);
+        if (linkData == null) {
+            return new SendMessage(message.getChatId().toString(), WRONG_LINK_FORMAT_RESPONSE);
+        }
+        log.info("Ссылка создана {}", url);
         webService.createLink(message.getChatId(), url);
         return new SendMessage(message.getChatId().toString(), SUCCESS_RESPONSE);
     }
