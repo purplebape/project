@@ -4,16 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
-import ru.tinkoff.edu.java.scrapper.model.entity.ChatEntity;
+import ru.tinkoff.edu.java.scrapper.model.view.Chat;
 
 import java.util.List;
 
-@Repository
 @RequiredArgsConstructor
 public class JdbcChatRepository {
     private final JdbcTemplate template;
-    private final BeanPropertyRowMapper<ChatEntity> mapper = new BeanPropertyRowMapper<>(ChatEntity.class);
+    private final BeanPropertyRowMapper<Chat> mapper = new BeanPropertyRowMapper<>(Chat.class);
 
     private final static String ADD_QUERY = "insert into chat (id) values (?)";
     private final static String REMOVE_BY_ID_QUERY = "delete from chat where id = ?";
@@ -25,6 +23,7 @@ public class JdbcChatRepository {
             where link_id = ?
             """;
 
+
     public Integer add(Long id) throws DuplicateKeyException {
         return template.update(ADD_QUERY, id);
     }
@@ -33,11 +32,11 @@ public class JdbcChatRepository {
         return template.update(REMOVE_BY_ID_QUERY, id);
     }
 
-    public List<ChatEntity> findAll() {
+    public List<Chat> findAll() {
         return template.query(FIND_ALL_QUERY, mapper);
     }
 
-    public List<ChatEntity> findAllSubscribers(Long linkId) {
+    public List<Chat> findAllSubscribers(Long linkId) {
         return template.query(FIND_ALL_SUBSCRIBERS_QUERY, mapper, linkId);
     }
 }

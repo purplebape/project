@@ -6,6 +6,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
+import ru.tinkoff.edu.java.bot.exception.LinkIsNotTrackingException;
 import ru.tinkoff.edu.java.bot.webService.ScrapperWebService;
 import ru.tinkoff.edu.java.parser.linkData.LinkData;
 import ru.tinkoff.edu.java.parser.linkHandler.ChainLinkHandler;
@@ -26,6 +27,7 @@ public class UntrackCommand extends AbstractPublicCommand {
     private static final String SUCCESS_RESPONSE = "Ссылка удалена из списка.";
     private static final String WRONG_FORMAT_RESPONSE = "Используйте правильный формат: /untrack <ссылка>";
     private static final String WRONG_LINK_FORMAT_RESPONSE = "Вы можете использовать только ссылки репозиториев GitHub и ссылки вопросов StackOverflow";
+    private static final String LINK_IS_NOT_TRACKING_RESPONSE = "Вы не можете отменить отслеживание ссылки, которая не отслеживается!";
 
     public UntrackCommand(ScrapperWebService webService, ChainLinkHandler linkHandler) {
         super(COMMAND, DESCRIPTION);
@@ -45,8 +47,12 @@ public class UntrackCommand extends AbstractPublicCommand {
         if (linkData == null) {
             return new SendMessage(message.getChatId().toString(), WRONG_LINK_FORMAT_RESPONSE);
         }
-        log.info("Ссылка удалена {}", url);
-        webService.deleteLink(message.getChatId(), url);
+        log.info("Removed link {}", url);
+        try {
+            webService.deleteLink(message.getChatId(), url);
+        } catch (LinkIsNotTrackingException ignored) {
+            return new SendMessage(message.getChatId().toString(), LINK_IS_NOT_TRACKING_RESPONSE);
+        }
         return new SendMessage(message.getChatId().toString(), SUCCESS_RESPONSE);
     }
 

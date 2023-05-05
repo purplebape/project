@@ -84,7 +84,7 @@ public class Link extends TableImpl<LinkRecord> {
     /**
      * The column <code>public.link.last_update_time</code>.
      */
-    public final TableField<LinkRecord, OffsetDateTime> LAST_UPDATE_TIME = createField(DSL.name("last_update_time"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).defaultValue(DSL.field("now()", SQLDataType.TIMESTAMPWITHTIMEZONE)), this, "");
+    public final TableField<LinkRecord, OffsetDateTime> LAST_UPDATE_TIME = createField(DSL.name("last_update_time"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.TIMESTAMPWITHTIMEZONE)), this, "");
 
     private Link(Name alias, Table<LinkRecord> aliased) {
         this(alias, aliased, null);

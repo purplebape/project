@@ -9,4 +9,3 @@ public class SendingMessageException extends RuntimeException {
         this("Error while sending message with chatId=" + id, cause);
     }
 }
-
