@@ -28,6 +28,10 @@ public class ApplicationConfig {
     private Bot bot;
     @NotNull
     private AccessType databaseAccessType;
+    @NotNull
+    private RabbitQueue rabbitQueue;
+
+    private Boolean useQueue = false;
 
     @Validated
     @Data
@@ -57,6 +61,17 @@ public class ApplicationConfig {
     public static class Bot {
         @NotBlank
         private String url;
+    }
+
+    @Validated
+    @Data
+    public static class RabbitQueue {
+        @NotBlank
+        private String exchangeName;
+        @NotBlank
+        private String queueName;
+        @NotBlank
+        private String routingKey;
     }
 
     public enum AccessType {

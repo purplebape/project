@@ -32,7 +32,7 @@ public class LinkUpdatesService {
     private final SubscriptionService subscriptionService;
     private final GitHubWebService gitHubWebService;
     private final StackOverflowWebService stackOverflowWebService;
-    private final BotWebService botWebService;
+    private final UpdatesSendingService updatesSendingService;
 
     public void updateLinks() {
         List<Link> uncheckedLinks = getUncheckedLinks();
@@ -65,8 +65,9 @@ public class LinkUpdatesService {
     }
 
     private void sendUpdates(Link link, UpdatesInfo updatesInfo) {
+        log.info("Sending updates");
         linkService.updateLinkLastUpdateTime(link.getId(), updatesInfo.lastUpdateTime());
-        botWebService.sendUpdate(new LinkUpdateRequest(
+        updatesSendingService.sendUpdate(new LinkUpdateRequest(
                 link.getId(),
                 link.getUrl(),
                 Strings.join(updatesInfo.updates(), '\n'),
