@@ -10,7 +10,6 @@ import java.time.OffsetDateTime;
 import javax.annotation.processing.Generated;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record4;
@@ -84,14 +83,14 @@ public class LinkRecord extends UpdatableRecordImpl<LinkRecord> implements Recor
     /**
      * Setter for <code>public.link.last_update_time</code>.
      */
-    public void setLastUpdateTime(@Nullable OffsetDateTime value) {
+    public void setLastUpdateTime(@NotNull OffsetDateTime value) {
         set(3, value);
     }
 
     /**
      * Getter for <code>public.link.last_update_time</code>.
      */
-    @Nullable
+    @NotNull
     public OffsetDateTime getLastUpdateTime() {
         return (OffsetDateTime) get(3);
     }
@@ -165,7 +164,7 @@ public class LinkRecord extends UpdatableRecordImpl<LinkRecord> implements Recor
     }
 
     @Override
-    @Nullable
+    @NotNull
     public OffsetDateTime component4() {
         return getLastUpdateTime();
     }
@@ -189,7 +188,7 @@ public class LinkRecord extends UpdatableRecordImpl<LinkRecord> implements Recor
     }
 
     @Override
-    @Nullable
+    @NotNull
     public OffsetDateTime value4() {
         return getLastUpdateTime();
     }
@@ -217,14 +216,14 @@ public class LinkRecord extends UpdatableRecordImpl<LinkRecord> implements Recor
 
     @Override
     @NotNull
-    public LinkRecord value4(@Nullable OffsetDateTime value) {
+    public LinkRecord value4(@NotNull OffsetDateTime value) {
         setLastUpdateTime(value);
         return this;
     }
 
     @Override
     @NotNull
-    public LinkRecord values(@NotNull Long value1, @NotNull String value2, @NotNull OffsetDateTime value3, @Nullable OffsetDateTime value4) {
+    public LinkRecord values(@NotNull Long value1, @NotNull String value2, @NotNull OffsetDateTime value3, @NotNull OffsetDateTime value4) {
         value1(value1);
         value2(value2);
         value3(value3);
@@ -247,7 +246,7 @@ public class LinkRecord extends UpdatableRecordImpl<LinkRecord> implements Recor
      * Create a detached, initialised LinkRecord
      */
     @ConstructorProperties({ "id", "url", "lastCheckTime", "lastUpdateTime" })
-    public LinkRecord(@NotNull Long id, @NotNull String url, @NotNull OffsetDateTime lastCheckTime, @Nullable OffsetDateTime lastUpdateTime) {
+    public LinkRecord(@NotNull Long id, @NotNull String url, @NotNull OffsetDateTime lastCheckTime, @NotNull OffsetDateTime lastUpdateTime) {
         super(Link.LINK);
 
         setId(id);

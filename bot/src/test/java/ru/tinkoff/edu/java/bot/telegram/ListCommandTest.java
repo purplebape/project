@@ -33,26 +33,20 @@ class ListCommandTest {
 
     @Test
     void handle__linksListEmpty_returnSpecialMessage() {
-        // given
         when(service.getAllLinks(anyLong())).thenReturn(createListLinksResponse(0));
 
-        // when
         SendMessage response = listCommand.handle(createListMessage());
 
-        // then
         assertEquals(response.getText(), "Отслеживаемых ссылок ещё нет.");
     }
 
     @Test
     void handle__linksListNotEmpty_returnExpectedFormat() {
-        // given
         int size = 4;
         when(service.getAllLinks(anyLong())).thenReturn(createListLinksResponse(size));
 
-        // when
         SendMessage response = listCommand.handle(createListMessage());
 
-        // then
         assertTrue(response.getText().startsWith("Список отслеживаемых ссылок: "));
         assertEquals(response.getText().split("\r\n|\r|\n").length, size + 1);
     }

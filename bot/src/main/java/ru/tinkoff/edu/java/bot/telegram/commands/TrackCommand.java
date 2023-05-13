@@ -6,6 +6,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
+import ru.tinkoff.edu.java.bot.exception.LinkIsAlreadyTackingException;
 import ru.tinkoff.edu.java.bot.webService.ScrapperWebService;
 import ru.tinkoff.edu.java.parser.linkData.LinkData;
 import ru.tinkoff.edu.java.parser.linkHandler.ChainLinkHandler;
@@ -26,6 +27,7 @@ public class TrackCommand extends AbstractPublicCommand {
     private static final String SUCCESS_RESPONSE = "Ссылка добавлена в список.";
     private static final String WRONG_FORMAT_RESPONSE = "Используйте правильный формат: /track <ссылка>";
     private static final String WRONG_LINK_FORMAT_RESPONSE = "Вы можете использовать только ссылки репозиториев GitHub и ссылки вопросов StackOverflow";
+    private static final String LINK_IS_ALREADY_TRACKING_RESPONSE = "Ссылка уже отслеживается!";
 
     public TrackCommand(ScrapperWebService webService, ChainLinkHandler linkHandler) {
         super(COMMAND, DESCRIPTION);
@@ -45,8 +47,12 @@ public class TrackCommand extends AbstractPublicCommand {
         if (linkData == null) {
             return new SendMessage(message.getChatId().toString(), WRONG_LINK_FORMAT_RESPONSE);
         }
-        log.info("Ссылка создана {}", url);
-        webService.createLink(message.getChatId(), url);
+        try {
+            webService.createLink(message.getChatId(), url);
+        } catch (LinkIsAlreadyTackingException ignored) {
+            return new SendMessage(message.getChatId().toString(), LINK_IS_ALREADY_TRACKING_RESPONSE);
+        }
+        log.info("Created link {}", url);
         return new SendMessage(message.getChatId().toString(), SUCCESS_RESPONSE);
     }
 

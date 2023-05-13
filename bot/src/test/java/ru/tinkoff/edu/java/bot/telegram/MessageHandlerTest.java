@@ -23,12 +23,8 @@ class MessageHandlerTest {
 
     @Test
     void handle__unknownCommand_returnSpecialMessage() {
-        // given
-
-        // when
         SendMessage response = messageHandler.handle(createMessage("SomeCommandThadDoesNotExist"));
 
-        // then
         assertEquals(response.getText(), "Команда неизвестна. Нажмите /help, чтобы посмотреть список команд.");
     }
 

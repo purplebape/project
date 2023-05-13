@@ -26,6 +26,8 @@ public class ApplicationConfig {
     private StackOverflow stackOverflow;
     @NotNull
     private Bot bot;
+    @NotNull
+    private AccessType databaseAccessType;
 
     @Validated
     @Data
@@ -55,5 +57,11 @@ public class ApplicationConfig {
     public static class Bot {
         @NotBlank
         private String url;
+    }
+
+    public enum AccessType {
+        JDBC,
+        JPA,
+        JOOQ
     }
 }

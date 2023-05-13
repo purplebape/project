@@ -11,7 +11,6 @@ import java.time.OffsetDateTime;
 import javax.annotation.processing.Generated;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 
 /**
@@ -48,7 +47,7 @@ public class Link implements Serializable {
         @NotNull Long id,
         @NotNull String url,
         @NotNull OffsetDateTime lastCheckTime,
-        @Nullable OffsetDateTime lastUpdateTime
+        @NotNull OffsetDateTime lastUpdateTime
     ) {
         this.id = id;
         this.url = url;
@@ -105,7 +104,7 @@ public class Link implements Serializable {
     /**
      * Getter for <code>public.link.last_update_time</code>.
      */
-    @Nullable
+    @NotNull
     public OffsetDateTime getLastUpdateTime() {
         return this.lastUpdateTime;
     }
@@ -113,7 +112,7 @@ public class Link implements Serializable {
     /**
      * Setter for <code>public.link.last_update_time</code>.
      */
-    public void setLastUpdateTime(@Nullable OffsetDateTime lastUpdateTime) {
+    public void setLastUpdateTime(@NotNull OffsetDateTime lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
     }
 

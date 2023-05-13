@@ -2,9 +2,13 @@ package ru.tinkoff.edu.java.scrapper;
 
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import static org.assertj.core.api.Assertions.*;
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
 import java.util.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class LiquibaseMigrationsTest extends IntegrationEnvironment {
     @Test
@@ -13,11 +17,7 @@ class LiquibaseMigrationsTest extends IntegrationEnvironment {
         Connection connection = getConnection();
         List<String> tableNames = getTablesNames(connection);
         Set<String> correctNames = new HashSet<>(Arrays.asList(
-                "link",
-                "chat",
-                "databasechangeloglock",
-                "databasechangelog",
-                "subscription"));
+                "link", "chat", "databasechangeloglock", "databasechangelog", "subscription"));
         for (String name : tableNames) {
             assertThat(correctNames).contains(name);
         }
