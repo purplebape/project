@@ -8,7 +8,12 @@ app:
     url: "https://api.stackexchange.com/2.3"
   bot:
     url: "http://localhost:8083"
-  databaseAccessType: "jpa"
+  databaseAccessType: jpa
+  use-queue: true
+  rabbit-queue:
+    exchange-name: updates
+    queue-name: updates.queue
+    routing-key: upd
 
 springdoc:
   swagger-ui:
@@ -23,3 +28,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/scrapper
     username: postgres
     password: password
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: pass
