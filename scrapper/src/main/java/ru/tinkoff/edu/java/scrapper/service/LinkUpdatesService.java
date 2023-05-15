@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.java.parser.linkData.GitHubLinkData;
 import ru.tinkoff.edu.java.parser.linkData.LinkData;
 import ru.tinkoff.edu.java.parser.linkData.StackOverflowLinkData;
-import ru.tinkoff.edu.java.parser.linkHandler.ChainLinkHandler;
+import ru.tinkoff.edu.java.parser.linkHandler.LinkHandlerChain;
 import ru.tinkoff.edu.java.scrapper.configuration.ApplicationConfig;
+import ru.tinkoff.edu.java.scrapper.exception.InternalError;
 import ru.tinkoff.edu.java.scrapper.model.bot.LinkUpdateRequest;
 import ru.tinkoff.edu.java.scrapper.model.client.UpdatesInfo;
 import ru.tinkoff.edu.java.scrapper.model.view.Link;
-import ru.tinkoff.edu.java.scrapper.exception.InternalError;
 import ru.tinkoff.edu.java.scrapper.service.domain.api.LinkService;
 import ru.tinkoff.edu.java.scrapper.service.domain.api.SubscriptionService;
 import ru.tinkoff.edu.java.scrapper.service.github.GitHubWebService;
@@ -25,7 +25,7 @@ import ru.tinkoff.edu.java.scrapper.service.stackoverflow.StackOverflowWebServic
 @RequiredArgsConstructor
 public class LinkUpdatesService {
     private final ApplicationConfig config;
-    private final ChainLinkHandler handlerChain;
+    private final LinkHandlerChain handlerChain;
     private final LinkService linkService;
     private final SubscriptionService subscriptionService;
     private final GitHubWebService gitHubWebService;

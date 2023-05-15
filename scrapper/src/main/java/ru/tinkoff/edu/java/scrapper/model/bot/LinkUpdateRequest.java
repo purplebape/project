@@ -14,4 +14,5 @@ public record LinkUpdateRequest(
         String description,
         @NotNull
         List<Long> tgChatsIds
-) {}
+) {
+}

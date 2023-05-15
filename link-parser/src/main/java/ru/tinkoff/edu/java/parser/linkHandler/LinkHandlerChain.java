@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import ru.tinkoff.edu.java.parser.linkData.LinkData;
 
 @AllArgsConstructor
-public class ChainLinkHandler {
+public class LinkHandlerChain {
     private final List<LinkHandler> handlers;
 
     public @Nullable LinkData handle(@NotNull String link) {

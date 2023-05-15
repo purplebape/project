@@ -1,5 +1,8 @@
 package ru.tinkoff.edu.java.scrapper.repository.jdbc;
 
+import java.sql.PreparedStatement;
+import java.time.OffsetDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
@@ -9,10 +12,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import ru.tinkoff.edu.java.scrapper.model.view.Link;
-
-import java.sql.PreparedStatement;
-import java.time.OffsetDateTime;
-import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor

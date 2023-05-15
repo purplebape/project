@@ -1,13 +1,13 @@
 package ru.tinkoff.edu.java.scrapper.controller;
 
+import java.util.Arrays;
+import java.util.Objects;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.reactive.result.method.annotation.ResponseEntityExceptionHandler;
 import ru.tinkoff.edu.java.scrapper.model.controller.ApiErrorResponse;
-import java.util.Arrays;
-import java.util.Objects;
 
 @RestControllerAdvice(
         basePackages = "ru.tinkoff.edu.java.scrapper.controller"

@@ -14,8 +14,8 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.tinkoff.edu.java.bot.model.controller.LinkUpdateRequest;
 import ru.tinkoff.edu.java.bot.listener.ScrapperQueueListener;
+import ru.tinkoff.edu.java.bot.model.controller.LinkUpdateRequest;
 import ru.tinkoff.edu.java.bot.telegram.TrackerBot;
 
 @Configuration
@@ -43,7 +43,7 @@ public class RabbitMQConfig {
     @Bean
     public ClassMapper classMapper() {
         Map<String, Class<?>> mappings = new HashMap<>();
-        mappings.put("ru.tinkoff.edu.java.scrapper.model.bot.LinkUpdateRequest", LinkUpdateRequest.class);
+        mappings.put("ru.tinkoff.edu.java.scrapper.dto.bot.LinkUpdateRequest", LinkUpdateRequest.class);
         DefaultClassMapper classMapper = new DefaultClassMapper();
         classMapper.setTrustedPackages("ru.tinkoff.edu.java.scrapper.model.*");
         classMapper.setIdClassMapping(mappings);
@@ -58,16 +58,16 @@ public class RabbitMQConfig {
     @Bean
     public Queue deadLetterQueue() {
         return QueueBuilder
-                .durable(queueName + DLQ_SUFFIX)
-                .build();
+            .durable(queueName + DLQ_SUFFIX)
+            .build();
     }
 
     @Bean
     public Binding deadLetterbinding(Queue deadLetterQueue, DirectExchange deadLetterExchange) {
         return BindingBuilder
-                .bind(deadLetterQueue)
-                .to(deadLetterExchange)
-                .with(routingKey + DLQ_SUFFIX);
+            .bind(deadLetterQueue)
+            .to(deadLetterExchange)
+            .with(routingKey + DLQ_SUFFIX);
     }
 
     @Bean

@@ -13,4 +13,5 @@ public record StackOverflowQuestionResponse(
         OffsetDateTime lastActivityDate,
         @JsonProperty("creation_date")
         OffsetDateTime creationDate
-) {}
+) {
+}

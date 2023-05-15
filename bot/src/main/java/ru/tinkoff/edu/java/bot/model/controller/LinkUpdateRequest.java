@@ -3,7 +3,6 @@ package ru.tinkoff.edu.java.bot.model.controller;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-
 import java.util.List;
 
 public record LinkUpdateRequest(
@@ -15,4 +14,5 @@ public record LinkUpdateRequest(
         String description,
         @NotNull
         List<Long> tgChatsIds
-) {}
+) {
+}

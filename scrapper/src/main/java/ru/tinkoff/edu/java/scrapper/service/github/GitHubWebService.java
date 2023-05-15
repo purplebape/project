@@ -1,15 +1,14 @@
 package ru.tinkoff.edu.java.scrapper.service.github;
 
 import jakarta.annotation.Nullable;
+import java.time.OffsetDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.java.scrapper.client.GitHubWebClient;
 import ru.tinkoff.edu.java.scrapper.model.client.GitHubEventResponse;
 import ru.tinkoff.edu.java.scrapper.model.client.UpdatesInfo;
-
-import java.time.OffsetDateTime;
-import java.util.List;
 
 @Slf4j
 @Service

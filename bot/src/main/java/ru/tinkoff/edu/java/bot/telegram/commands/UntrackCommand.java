@@ -11,24 +11,26 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.tinkoff.edu.java.bot.exception.LinkIsNotTrackingException;
 import ru.tinkoff.edu.java.bot.webService.ScrapperWebService;
 import ru.tinkoff.edu.java.parser.linkData.LinkData;
-import ru.tinkoff.edu.java.parser.linkHandler.ChainLinkHandler;
+import ru.tinkoff.edu.java.parser.linkHandler.LinkHandlerChain;
 
 @Order(5)
 @Slf4j
 @Component
 public class UntrackCommand extends AbstractPublicCommand {
     private final ScrapperWebService webService;
-    private final ChainLinkHandler linkHandler;
+    private final LinkHandlerChain linkHandler;
 
     private static final String COMMAND = "/untrack";
     private static final String DESCRIPTION = "прекратить отслеживание ссылки";
     private static final Pattern PATTERN = Pattern.compile("^\\s*/untrack (\\S+)\\s*$");
     private static final String SUCCESS_RESPONSE = "Ссылка удалена из списка.";
     private static final String WRONG_FORMAT_RESPONSE = "Используйте правильный формат: /untrack <ссылка>";
-    private static final String WRONG_LINK_FORMAT_RESPONSE = "Вы можете использовать только ссылки репозиториев GitHub и ссылки вопросов StackOverflow";
-    private static final String LINK_IS_NOT_TRACKING_RESPONSE = "Вы не можете отменить отслеживание ссылки, которая не отслеживается!";
+    private static final String WRONG_LINK_FORMAT_RESPONSE =
+        "Вы можете использовать только ссылки репозиториев GitHub и ссылки вопросов StackOverflow";
+    private static final String LINK_IS_NOT_TRACKING_RESPONSE =
+        "Вы не можете отменить отслеживание ссылки, которая не отслеживается!";
 
-    public UntrackCommand(ScrapperWebService webService, ChainLinkHandler linkHandler) {
+    public UntrackCommand(ScrapperWebService webService, LinkHandlerChain linkHandler) {
         super(COMMAND, DESCRIPTION);
         this.webService = webService;
         this.linkHandler = linkHandler;

@@ -12,8 +12,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.commands.BotCommand;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.tinkoff.edu.java.bot.configuration.ApplicationConfig;
-import ru.tinkoff.edu.java.bot.model.controller.LinkUpdateRequest;
 import ru.tinkoff.edu.java.bot.exception.SendingMessageException;
+import ru.tinkoff.edu.java.bot.model.controller.LinkUpdateRequest;
 import ru.tinkoff.edu.java.bot.telegram.commands.AbstractPublicCommand;
 
 @Slf4j

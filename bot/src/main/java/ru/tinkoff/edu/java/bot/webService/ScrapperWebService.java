@@ -4,15 +4,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
-import ru.tinkoff.edu.java.bot.webClient.ScrapperWebClient;
-import ru.tinkoff.edu.java.bot.model.scrapper.AddLinkRequest;
-import ru.tinkoff.edu.java.bot.model.scrapper.LinkResponse;
-import ru.tinkoff.edu.java.bot.model.scrapper.ListLinksResponse;
-import ru.tinkoff.edu.java.bot.model.scrapper.RemoveLinkRequest;
 import ru.tinkoff.edu.java.bot.exception.ChatAlreadyRegisteredException;
 import ru.tinkoff.edu.java.bot.exception.LinkIsAlreadyTackingException;
 import ru.tinkoff.edu.java.bot.exception.LinkIsNotTrackingException;
 import ru.tinkoff.edu.java.bot.exception.ScrapperInternalError;
+import ru.tinkoff.edu.java.bot.model.scrapper.AddLinkRequest;
+import ru.tinkoff.edu.java.bot.model.scrapper.LinkResponse;
+import ru.tinkoff.edu.java.bot.model.scrapper.ListLinksResponse;
+import ru.tinkoff.edu.java.bot.model.scrapper.RemoveLinkRequest;
+import ru.tinkoff.edu.java.bot.webClient.ScrapperWebClient;
 
 @Slf4j
 @Service

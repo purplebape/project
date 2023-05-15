@@ -8,7 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.tinkoff.edu.java.parser.linkData.LinkData;
-import ru.tinkoff.edu.java.parser.linkHandler.ChainLinkHandler;
+import ru.tinkoff.edu.java.parser.linkHandler.LinkHandlerChain;
 import ru.tinkoff.edu.java.parser.linkHandler.GitHubLinkHandler;
 import ru.tinkoff.edu.java.parser.linkHandler.LinkHandler;
 import ru.tinkoff.edu.java.parser.linkHandler.StackOverflowLinkHandler;
@@ -16,14 +16,14 @@ import ru.tinkoff.edu.java.parser.linkHandler.StackOverflowLinkHandler;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ChainLinkHandlerTest {
-    private final ChainLinkHandler chainLinkHandler;
+    private final LinkHandlerChain chainLinkHandler;
 
     ChainLinkHandlerTest() {
         List<LinkHandler> handlers = Arrays.asList(
                 new GitHubLinkHandler(),
                 new StackOverflowLinkHandler()
         );
-        chainLinkHandler = new ChainLinkHandler(handlers);
+        chainLinkHandler = new LinkHandlerChain(handlers);
     }
 
     @ParameterizedTest

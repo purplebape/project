@@ -10,7 +10,9 @@ import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.support.WebClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
-import ru.tinkoff.edu.java.scrapper.client.*;
+import ru.tinkoff.edu.java.scrapper.client.BotWebClient;
+import ru.tinkoff.edu.java.scrapper.client.GitHubWebClient;
+import ru.tinkoff.edu.java.scrapper.client.StackOverflowWebClient;
 
 @Configuration
 public class WebClientConfig {
