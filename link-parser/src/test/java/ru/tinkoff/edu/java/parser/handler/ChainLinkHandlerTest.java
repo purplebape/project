@@ -1,5 +1,8 @@
 package ru.tinkoff.edu.java.parser.handler;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -9,10 +12,6 @@ import ru.tinkoff.edu.java.parser.linkHandler.ChainLinkHandler;
 import ru.tinkoff.edu.java.parser.linkHandler.GitHubLinkHandler;
 import ru.tinkoff.edu.java.parser.linkHandler.LinkHandler;
 import ru.tinkoff.edu.java.parser.linkHandler.StackOverflowLinkHandler;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

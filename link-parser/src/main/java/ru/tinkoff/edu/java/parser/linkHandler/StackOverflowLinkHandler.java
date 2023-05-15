@@ -1,16 +1,15 @@
 package ru.tinkoff.edu.java.parser.linkHandler;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.tinkoff.edu.java.parser.linkData.LinkData;
 import ru.tinkoff.edu.java.parser.linkData.StackOverflowLinkData;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public final class StackOverflowLinkHandler implements LinkHandler {
     private final Pattern pattern = Pattern.compile(
-            "^https://stackoverflow\\.com/questions/(\\d+)/[^/]+/?$"
+        "^https://stackoverflow\\.com/questions/(\\d+)/[^/]+/?$"
     );
 
     @Override
