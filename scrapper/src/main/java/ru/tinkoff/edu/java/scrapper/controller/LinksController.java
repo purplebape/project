@@ -26,8 +26,10 @@ public class LinksController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public LinkResponse create(@PathVariable("id") Long id,
-                               @RequestBody AddLinkRequest request) {
+    public LinkResponse create(
+            @PathVariable("id") Long id,
+            @RequestBody AddLinkRequest request
+    ) {
         Link link = subscriptionService.subscribe(id, URI.create(request.link()));
         return new LinkResponse(link.getId(), URI.create(link.getUrl()));
     }
@@ -49,8 +51,10 @@ public class LinksController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public LinkResponse delete(@PathVariable("id") Long id,
-                               @RequestBody RemoveLinkRequest request) {
+    public LinkResponse delete(
+            @PathVariable("id") Long id,
+            @RequestBody RemoveLinkRequest request
+    ) {
         Link link = subscriptionService.unsubscribe(id, URI.create(request.link()));
         return new LinkResponse(link.getId(), URI.create(link.getUrl()));
     }

@@ -13,7 +13,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JooqChatRepository {
     private final DSLContext context;
-    private final ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Chat chat = ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Chat.CHAT;
+    private final ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Chat chat =
+            ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Chat.CHAT;
     private final Subscription subscription = Subscription.SUBSCRIPTION;
 
     public void add(Long id) {

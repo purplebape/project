@@ -6,8 +6,8 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
-import ru.tinkoff.edu.java.bot.webService.ScrapperWebService;
 import ru.tinkoff.edu.java.bot.exception.ChatAlreadyRegisteredException;
+import ru.tinkoff.edu.java.bot.webService.ScrapperWebService;
 
 @Order(3)
 @Component

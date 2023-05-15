@@ -11,7 +11,6 @@ import ru.tinkoff.edu.java.scrapper.model.client.UpdatesInfo;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @Service
 @RequiredArgsConstructor
 public class StackOverflowWebService {

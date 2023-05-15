@@ -17,12 +17,11 @@ public class JdbcChatRepository {
     private final static String REMOVE_BY_ID_QUERY = "delete from chat where id = ?";
     private final static String FIND_ALL_QUERY = "select id from chat";
     private final static String FIND_ALL_SUBSCRIBERS_QUERY = """
-            select id 
-            from chat
-            join subscription on chat.id = chat_id
-            where link_id = ?
-            """;
-
+        select id
+        from chat
+        join subscription on chat.id = chat_id
+        where link_id = ?
+        """;
 
     public Integer add(Long id) throws DuplicateKeyException {
         return template.update(ADD_QUERY, id);

@@ -16,7 +16,9 @@ public final class GitHubLinkHandler implements LinkHandler {
     @Override
     public @Nullable LinkData handleLink(@NotNull String link) {
         Matcher matcher = pattern.matcher(link);
-        if (!matcher.matches()) return null;
+        if (!matcher.matches()) {
+            return null;
+        }
         String username = matcher.group(1);
         String repository = matcher.group(2);
         return new GitHubLinkData(username, repository);

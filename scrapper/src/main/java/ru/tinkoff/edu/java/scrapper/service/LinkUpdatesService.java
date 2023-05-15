@@ -1,6 +1,7 @@
 package ru.tinkoff.edu.java.scrapper.service;
 
 import jakarta.annotation.Nullable;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
@@ -14,13 +15,10 @@ import ru.tinkoff.edu.java.scrapper.model.bot.LinkUpdateRequest;
 import ru.tinkoff.edu.java.scrapper.model.client.UpdatesInfo;
 import ru.tinkoff.edu.java.scrapper.model.view.Link;
 import ru.tinkoff.edu.java.scrapper.exception.InternalError;
-import ru.tinkoff.edu.java.scrapper.service.bot.BotWebService;
-import ru.tinkoff.edu.java.scrapper.service.github.GitHubWebService;
-import ru.tinkoff.edu.java.scrapper.service.stackoverflow.StackOverflowWebService;
 import ru.tinkoff.edu.java.scrapper.service.domain.api.LinkService;
 import ru.tinkoff.edu.java.scrapper.service.domain.api.SubscriptionService;
-
-import java.util.List;
+import ru.tinkoff.edu.java.scrapper.service.github.GitHubWebService;
+import ru.tinkoff.edu.java.scrapper.service.stackoverflow.StackOverflowWebService;
 
 @Slf4j
 @Service
@@ -39,9 +37,9 @@ public class LinkUpdatesService {
         log.info(uncheckedLinks.stream().map(Link::toString).toList().toString());
         uncheckedLinks.forEach(link -> {
             UpdatesInfo updatesInfo = fetchUpdates(link);
-            boolean shouldSendUpdate = updatesInfo != null &&
-                    (link.getLastUpdateTime() == null ||
-                            link.getLastUpdateTime().isBefore(updatesInfo.lastUpdateTime()));
+            boolean shouldSendUpdate = updatesInfo != null
+                    && (link.getLastUpdateTime() == null
+                    || link.getLastUpdateTime().isBefore(updatesInfo.lastUpdateTime()));
             if (shouldSendUpdate) {
                 sendUpdates(link, updatesInfo);
             }

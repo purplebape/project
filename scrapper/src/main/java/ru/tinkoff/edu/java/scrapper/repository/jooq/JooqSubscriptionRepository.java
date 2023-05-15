@@ -11,7 +11,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JooqSubscriptionRepository {
     private final DSLContext context;
-    private final ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Subscription subscription = ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Subscription.SUBSCRIPTION;
+    private final ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Subscription subscription =
+            ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Subscription.SUBSCRIPTION;
 
     public void add(Long chatId, Long linkId) {
         context.insertInto(subscription)

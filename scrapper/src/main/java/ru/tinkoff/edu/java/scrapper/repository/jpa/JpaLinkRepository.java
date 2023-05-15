@@ -17,21 +17,21 @@ import java.util.Optional;
 @ConditionalOnProperty(prefix = "app", name = "database-access-type", havingValue = "jpa")
 public interface JpaLinkRepository extends JpaRepository<LinkEntity, Long> {
     @Query("""
-            delete from LinkEntity l
-            where l.id in 
-                (select l.id from LinkEntity l
-                left outer join SubscriptionEntity s on l.id = s.linkId 
-                where s.linkId is NULL)
-            """)
+        delete from LinkEntity l
+        where l.id in
+            (select l.id from LinkEntity l
+            left outer join SubscriptionEntity s on l.id = s.linkId
+            where s.linkId is NULL)
+        """)
     @Modifying
     void deleteWithZeroSubscribers();
 
     @Query(value = """
-            update link
-            set last_check_time = now()
-            where :timeParam > last_check_time
-            returning id, url, last_check_time, last_update_time
-            """, nativeQuery = true)
+        update link
+        set last_check_time = now()
+        where :timeParam > last_check_time
+        returning id, url, last_check_time, last_update_time
+        """, nativeQuery = true)
     @Modifying(clearAutomatically = true)
     List<LinkEntity> updateLastCheckedTimeAndGet(@Param("timeParam") OffsetDateTime shouldBeCheckedAfter);
 

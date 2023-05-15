@@ -6,7 +6,6 @@ import ru.tinkoff.edu.java.parser.linkHandler.GitHubLinkHandler;
 import ru.tinkoff.edu.java.parser.linkHandler.LinkHandler;
 import ru.tinkoff.edu.java.parser.linkHandler.ChainLinkHandler;
 import ru.tinkoff.edu.java.parser.linkHandler.StackOverflowLinkHandler;
-
 import java.util.List;
 
 @Configuration

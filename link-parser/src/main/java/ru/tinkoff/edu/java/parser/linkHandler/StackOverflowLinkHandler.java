@@ -16,7 +16,9 @@ public final class StackOverflowLinkHandler implements LinkHandler {
     @Override
     public @Nullable LinkData handleLink(@NotNull String link) {
         Matcher matcher = pattern.matcher(link);
-        if (!matcher.matches()) return null;
+        if (!matcher.matches()) {
+            return null;
+        }
         Integer questionId = Integer.valueOf(matcher.group(1));
         return new StackOverflowLinkData(questionId);
     }

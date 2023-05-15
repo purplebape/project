@@ -18,22 +18,23 @@ import static org.jooq.impl.DSL.select;
 @RequiredArgsConstructor
 public class JooqLinkRepository {
     private final DSLContext context;
-    private final ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Link link = ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Link.LINK;
+    private final ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Link link =
+            ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Link.LINK;
     private final Subscription subscription = Subscription.SUBSCRIPTION;
 
     public Link subscribe(String url, Long chatId) {
-        Link link = find(url);
-        if (link == null) {
-            link = context.insertInto(this.link)
+        Link subscribingLink = find(url);
+        if (subscribingLink == null) {
+            subscribingLink = context.insertInto(this.link)
                     .set(this.link.URL, url)
                     .returning(this.link.fields())
                     .fetchOneInto(Link.class);
         }
         context.insertInto(subscription)
-                .set(subscription.LINK_ID, link.getId())
+                .set(subscription.LINK_ID, subscribingLink.getId())
                 .set(subscription.CHAT_ID, chatId)
                 .execute();
-        return link;
+        return subscribingLink;
     }
 
     public @Nullable Link find(String url) {

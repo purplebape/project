@@ -15,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JooqLinkService implements LinkService {
     private final JooqLinkRepository linkRepository;
+
     @Override
     @Transactional
     public List<Link> updateLastCheckedTimeAndGet(Duration linkToBeCheckedInterval) {
