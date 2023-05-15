@@ -1,5 +1,9 @@
 package ru.tinkoff.edu.java.scrapper.repository;
 
+import java.sql.PreparedStatement;
+import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,12 +18,7 @@ import ru.tinkoff.edu.java.scrapper.IntegrationEnvironment;
 import ru.tinkoff.edu.java.scrapper.model.view.Subscription;
 import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcSubscriptionRepository;
 
-import java.sql.PreparedStatement;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-@SpringBootTest
+@SpringBootTest(properties = {"app.database-access-type=jdbc"})
 class JdbcSubscriptionRepositoryTest extends IntegrationEnvironment {
     @Autowired
     private JdbcTemplate template;
@@ -31,15 +30,18 @@ class JdbcSubscriptionRepositoryTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     void add__addOne_oneAdded() {
+        // given
         String url = "https://github.com/purplebape/project";
         Long chatId = 1L;
         Long linkId = createLink(url);
         createChat(chatId);
 
+        // when
         int beforeCount = getAll().size();
         subscriptionRepository.add(chatId, linkId);
         int afterCount = getAll().size();
 
+        // then
         assertEquals(beforeCount + 1, afterCount);
     }
 
@@ -47,13 +49,16 @@ class JdbcSubscriptionRepositoryTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     void add__alreadyExist_throwsException() {
+        // given
         String url = "https://github.com/purplebape/project";
         Long chatId = 1L;
         Long linkId = createLink(url);
         createChat(chatId);
 
+        // when
         subscriptionRepository.add(chatId, linkId);
 
+        // then
         assertThrows(DuplicateKeyException.class, () -> subscriptionRepository.add(chatId, linkId));
     }
 
@@ -61,9 +66,13 @@ class JdbcSubscriptionRepositoryTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     void findAll__nothingExists_zeroItemsReturned() {
+        // given
+
+        // when
         int querySize = getAll().size();
         List<Subscription> all = subscriptionRepository.findAll();
 
+        // then
         assertEquals(all.size(), 0);
         assertEquals(all.size(), querySize);
     }
@@ -72,15 +81,18 @@ class JdbcSubscriptionRepositoryTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     void findAll__oneExists_oneReturned() {
+        // given
         String url = "https://github.com/purplebape/project";
         Long chatId = 1L;
         Long linkId = createLink(url);
         createChat(chatId);
         createSubscription(chatId, linkId);
 
+        // when
         int querySize = getAll().size();
         List<Subscription> all = subscriptionRepository.findAll();
 
+        // then
         assertEquals(all.size(), 1);
         assertEquals(all.size(), querySize);
     }
@@ -89,16 +101,19 @@ class JdbcSubscriptionRepositoryTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     void remove__oneExists_oneRemoved() {
+        // given
         String url = "https://github.com/purplebape/project";
         Long chatId = 1L;
         Long linkId = createLink(url);
         createChat(chatId);
         createSubscription(chatId, linkId);
 
+        // when
         int beforeCount = getAll().size();
         int removed = subscriptionRepository.remove(chatId, linkId);
         int afterCount = getAll().size();
 
+        // then
         assertEquals(beforeCount - 1, afterCount);
         assertEquals(removed, 1);
     }
@@ -107,13 +122,16 @@ class JdbcSubscriptionRepositoryTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     void remove__notExists_zeroRemoved() {
+        // given
         Long chatId = 1L;
         Long linkId = 1L;
 
+        // when
         int beforeCount = getAll().size();
         int removed = subscriptionRepository.remove(chatId, linkId);
         int afterCount = getAll().size();
 
+        // then
         assertEquals(beforeCount, afterCount);
         assertEquals(removed, 0);
     }
@@ -122,14 +140,17 @@ class JdbcSubscriptionRepositoryTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     void countSubscriptions__oneSubscriber_oneCounted() {
+        // given
         String url = "https://github.com/purplebape/project";
         Long chatId = 1L;
         Long linkId = createLink(url);
         createChat(chatId);
         createSubscription(chatId, linkId);
 
+        // when
         Integer counted = subscriptionRepository.countSubscriptions(linkId);
 
+        // then
         assertEquals(counted, 1);
     }
 
@@ -137,18 +158,24 @@ class JdbcSubscriptionRepositoryTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     void countSubscriptions__zeroSubscribers_zeroCounted() {
+        // given
         String url = "https://github.com/purplebape/project";
         Long chatId = 1L;
         Long linkId = createLink(url);
         createChat(chatId);
 
+        // when
         Integer counted = subscriptionRepository.countSubscriptions(linkId);
 
+        // then
         assertEquals(counted, 0);
     }
 
     private List<Subscription> getAll() {
-        return template.query("select chat_id, link_id from subscription", new BeanPropertyRowMapper<>(Subscription.class));
+        return template.query(
+            "select chat_id, link_id from subscription",
+            new BeanPropertyRowMapper<>(Subscription.class)
+        );
     }
 
     private Long createLink(String url) {

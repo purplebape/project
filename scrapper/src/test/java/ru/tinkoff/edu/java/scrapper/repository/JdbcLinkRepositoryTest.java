@@ -1,5 +1,9 @@
 package ru.tinkoff.edu.java.scrapper.repository;
 
+import java.sql.PreparedStatement;
+import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,13 +19,7 @@ import ru.tinkoff.edu.java.scrapper.IntegrationEnvironment;
 import ru.tinkoff.edu.java.scrapper.model.view.Link;
 import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcLinkRepository;
 
-import java.sql.PreparedStatement;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-@SpringBootTest
+@SpringBootTest(properties = {"app.database-access-type=jdbc"})
 class JdbcLinkRepositoryTest extends IntegrationEnvironment {
     @Autowired
     private JdbcTemplate template;
@@ -33,12 +31,15 @@ class JdbcLinkRepositoryTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     void add__addOne_oneAdded() {
+        // given
         String url = "https://github.com/purplebape/project";
 
+        // when
         int countBefore = getAll().size();
         linkRepository.add(url);
         int countAfter = getAll().size();
 
+        // then
         assertEquals(countBefore + 1, countAfter);
     }
 
@@ -46,10 +47,13 @@ class JdbcLinkRepositoryTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     void add__alreadyExist_throwsException() {
+        // given
         String url = "https://github.com/purplebape/project";
 
+        // when
         linkRepository.add(url);
 
+        // then
         assertThrows(DuplicateKeyException.class, () -> linkRepository.add(url));
     }
 
@@ -57,11 +61,14 @@ class JdbcLinkRepositoryTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     void find__exists_returnsOne() {
+        // given
         String url = "https://github.com/purplebape/project";
         Long id = createLink(url);
 
+        // when
         Link link = linkRepository.find(url);
 
+        // then
         assertEquals(link.getId(), id);
     }
 
@@ -69,8 +76,12 @@ class JdbcLinkRepositoryTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     void find__notExists_throwsException() {
+        // given
         String url = "https://github.com/purplebape/project";
 
+        // when
+
+        // then
         assertThrows(EmptyResultDataAccessException.class, () -> linkRepository.find(url));
     }
 
@@ -78,11 +89,14 @@ class JdbcLinkRepositoryTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     void findById__exists_returnsOne() {
+        // given
         String url = "https://github.com/purplebape/project";
         Long id = createLink(url);
 
+        // when
         Link link = linkRepository.findById(id);
 
+        // then
         assertEquals(link.getId(), id);
     }
 
@@ -90,8 +104,12 @@ class JdbcLinkRepositoryTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     void findById__notExists_throwsException() {
+        // given
         Long id = 1L;
 
+        // when
+
+        // then
         assertThrows(EmptyResultDataAccessException.class, () -> linkRepository.findById(id));
     }
 
@@ -99,8 +117,12 @@ class JdbcLinkRepositoryTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     void findAll__nothingExists_zeroItemsReturned() {
+        // given
+
+        // when
         List<Link> all = linkRepository.findAll();
 
+        // then
         assertEquals(all.size(), 0);
     }
 
@@ -108,11 +130,14 @@ class JdbcLinkRepositoryTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     void findAll__oneExists_oneReturned() {
+        // given
         String url = "https://github.com/purplebape/project";
         createLink(url);
 
+        // when
         List<Link> all = linkRepository.findAll();
 
+        // then
         assertEquals(all.size(), 1);
     }
 
@@ -120,14 +145,17 @@ class JdbcLinkRepositoryTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     void findWithChatSubscription__exists_returnsNotEmpty() {
+        // given
         String url = "https://github.com/purplebape/project";
         Long chatId = 1L;
         Long linkId = createLink(url);
         createChat(chatId);
         createSubscription(chatId, linkId);
 
+        // when
         List<Link> linkEntities = linkRepository.findWithSubscriber(chatId);
 
+        // then
         assertEquals(linkEntities.size(), 1);
     }
 
@@ -135,10 +163,13 @@ class JdbcLinkRepositoryTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     void findWithChatSubscription__notExists_returnsEmpty() {
+        // given
         Long chatId = 1L;
 
+        // when
         List<Link> linkEntities = linkRepository.findWithSubscriber(chatId);
 
+        // then
         assertEquals(linkEntities.size(), 0);
     }
 
@@ -146,13 +177,16 @@ class JdbcLinkRepositoryTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     void remove__oneExists_oneRemoved() {
+        // given
         String url = "https://github.com/purplebape/project";
         createLink(url);
 
+        // when
         int countBefore = getAll().size();
         int removed = linkRepository.remove(url);
         int countAfter = getAll().size();
 
+        // then
         assertEquals(removed, 1);
         assertEquals(countBefore - 1, countAfter);
     }
@@ -161,12 +195,15 @@ class JdbcLinkRepositoryTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     void remove__notExists_zeroRemoved() {
+        // given
         String url = "https://github.com/purplebape/project";
 
+        // when
         int countBefore = getAll().size();
         int removed = linkRepository.remove(url);
         int countAfter = getAll().size();
 
+        // then
         assertEquals(removed, 0);
         assertEquals(countBefore, countAfter);
     }
@@ -175,13 +212,16 @@ class JdbcLinkRepositoryTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     void removeById__exists_removed() {
+        // given
         String url = "https://github.com/purplebape/project";
         Long id = createLink(url);
 
+        // when
         int beforeCount = getAll().size();
         linkRepository.removeById(id);
         int afterCount = getAll().size();
 
+        // then
         assertEquals(beforeCount - 1, afterCount);
     }
 
@@ -189,12 +229,15 @@ class JdbcLinkRepositoryTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     void removeById__notExists_notRemoved() {
+        // given
         Long id = 1L;
 
+        // when
         int beforeCount = getAll().size();
         linkRepository.removeById(id);
         int afterCount = getAll().size();
 
+        // then
         assertEquals(beforeCount, afterCount);
     }
 
@@ -202,13 +245,16 @@ class JdbcLinkRepositoryTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     void removeWithZeroSubscriptions__doesNotHaveSub_removed() {
+        // given
         String url = "https://github.com/purplebape/project";
         createLink(url);
 
+        // when
         int beforeCount = getAll().size();
         int removed = linkRepository.removeWithZeroSubscribers();
         int afterCount = getAll().size();
 
+        // then
         assertEquals(removed, 1);
         assertEquals(beforeCount - 1, afterCount);
     }
@@ -217,16 +263,19 @@ class JdbcLinkRepositoryTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     void removeWithZeroSubscriptions__allLinksHaveSub_nothingRemoved() {
+        // given
         String url = "https://github.com/purplebape/project";
         Long chatId = 1L;
         Long linkId = createLink(url);
         createChat(chatId);
         createSubscription(chatId, linkId);
 
+        // when
         int beforeCount = getAll().size();
         int removed = linkRepository.removeWithZeroSubscribers();
         int afterCount = getAll().size();
 
+        // then
         assertEquals(removed, 0);
         assertEquals(beforeCount, afterCount);
     }
