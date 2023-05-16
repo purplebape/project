@@ -1,19 +1,19 @@
 package ru.tinkoff.edu.java.scrapper.repository.jooq;
 
 import jakarta.annotation.Nullable;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 import ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Subscription;
 import ru.tinkoff.edu.java.scrapper.model.view.Chat;
 
-import java.util.List;
-
 @Repository
 @RequiredArgsConstructor
 public class JooqChatRepository {
     private final DSLContext context;
-    private final ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Chat chat = ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Chat.CHAT;
+    private final ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Chat chat =
+            ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Chat.CHAT;
     private final Subscription subscription = Subscription.SUBSCRIPTION;
 
     public void add(Long id) {

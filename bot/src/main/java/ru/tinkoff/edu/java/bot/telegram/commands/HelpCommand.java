@@ -1,13 +1,13 @@
 package ru.tinkoff.edu.java.bot.telegram.commands;
 
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
-import java.util.List;
 
 @Component
 @Order(1)
@@ -21,14 +21,16 @@ public class HelpCommand extends AbstractPublicCommand {
         super(COMMAND, DESCRIPTION);
         commandsDescription = publicCommands
                 .stream()
-                .map(c -> c.getCommand() + " - " + c.getDescription())
+                .map(c -> c.getCommand() + ": " + c.getDescription())
                 .toList();
     }
 
     @Override
     public SendMessage handle(@NotNull Message message) {
-        return new SendMessage(message.getChatId().toString(),
-                "Описание команд: \n" + Strings.join(commandsDescription, '\n'));
+        return new SendMessage(
+                message.getChatId().toString(),
+                "Описание команд: \n" + Strings.join(commandsDescription, '\n')
+        );
     }
 
     @Override

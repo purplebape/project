@@ -1,5 +1,7 @@
 package ru.tinkoff.edu.java.bot.controller;
 
+import java.util.Arrays;
+import java.util.Objects;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -7,9 +9,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.tinkoff.edu.java.bot.model.controller.ApiErrorResponse;
-
-import java.util.Arrays;
-import java.util.Objects;
 
 @RestControllerAdvice(
         basePackages = "ru.tinkoff.edu.java.bot.controller"

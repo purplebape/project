@@ -1,6 +1,9 @@
 package ru.tinkoff.edu.java.bot.telegram.commands;
 
 import jakarta.validation.constraints.NotNull;
+import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -8,10 +11,6 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.tinkoff.edu.java.bot.model.scrapper.LinkResponse;
 import ru.tinkoff.edu.java.bot.model.scrapper.ListLinksResponse;
 import ru.tinkoff.edu.java.bot.webService.ScrapperWebService;
-
-import java.net.URI;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Order(2)
 @Component

@@ -1,39 +1,37 @@
 package ru.tinkoff.edu.java.scrapper.repository.jooq;
 
 import jakarta.annotation.Nullable;
+import java.time.OffsetDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 import ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Subscription;
 import ru.tinkoff.edu.java.scrapper.model.view.Link;
-
-import java.time.OffsetDateTime;
-import java.util.List;
-
 import static org.jooq.impl.DSL.currentOffsetDateTime;
 import static org.jooq.impl.DSL.select;
-
 
 @Repository
 @RequiredArgsConstructor
 public class JooqLinkRepository {
     private final DSLContext context;
-    private final ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Link link = ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Link.LINK;
+    private final ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Link link =
+            ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Link.LINK;
     private final Subscription subscription = Subscription.SUBSCRIPTION;
 
     public Link subscribe(String url, Long chatId) {
-        Link link = find(url);
-        if (link == null) {
-            link = context.insertInto(this.link)
+        Link subscribingLink = find(url);
+        if (subscribingLink == null) {
+            subscribingLink = context.insertInto(this.link)
                     .set(this.link.URL, url)
                     .returning(this.link.fields())
                     .fetchOneInto(Link.class);
         }
         context.insertInto(subscription)
-                .set(subscription.LINK_ID, link.getId())
+                .set(subscription.LINK_ID, subscribingLink.getId())
                 .set(subscription.CHAT_ID, chatId)
                 .execute();
-        return link;
+        return subscribingLink;
     }
 
     public @Nullable Link find(String url) {

@@ -1,16 +1,14 @@
 package ru.tinkoff.edu.java.scrapper.service.stackoverflow;
 
 import jakarta.annotation.Nullable;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.java.scrapper.client.StackOverflowWebClient;
 import ru.tinkoff.edu.java.scrapper.model.client.StackOverflowQuestionResponse;
 import ru.tinkoff.edu.java.scrapper.model.client.StackOverflowQuestionsResponse;
 import ru.tinkoff.edu.java.scrapper.model.client.UpdatesInfo;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
 
 @Service
 @RequiredArgsConstructor
