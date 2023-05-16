@@ -1,7 +1,7 @@
 app:
   bot:
     name: "tinkoff-bot"
-    token:
+    token: 5766916823:AAH-or1c4F7qXaKzvb8UeELQFmY474Gfbv0
   scrapper:
     url: "http://localhost:8080"
   rabbit-queue:
@@ -15,12 +15,35 @@ springdoc:
 
 management:
   server:
-    port: 8080
+    port: 8091
+  endpoints:
+    enabled-by-default: false
+    web:
+      base-path: /
+      exposure:
+        include: [ "info", "health", "prometheus" ]
+      path-mapping:
+        prometheus: metrics
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: true
+      probes.enabled: true
+      group:
+        readiness.include: db
+        liveness.include: ping
+    prometheus:
+      enabled: true
+  metrics.tags:
+    application: ${spring.application.name}
 
 server:
   port: 8083
 
 spring:
+  application:
+    name: "bot"
   rabbitmq:
     host: localhost
     port: 5672

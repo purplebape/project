@@ -21,9 +21,32 @@ springdoc:
 
 management:
   server:
-    port: 8080
+    port: 8092
+  endpoints:
+    enabled-by-default: false
+    web:
+      base-path: /
+      exposure:
+        include: [ "info", "health", "prometheus" ]
+      path-mapping:
+        prometheus: metrics
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: true
+      probes.enabled: true
+      group:
+        readiness.include: db
+        liveness.include: ping
+    prometheus:
+      enabled: true
+  metrics.tags:
+    application: ${spring.application.name}
 
 spring:
+  application:
+    name: "scrapper"
   datasource:
     url: jdbc:postgresql://localhost:5432/scrapper
     username: postgres
