@@ -21,10 +21,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-      - name: Set environment variable from secret
-        env:
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-        run: echo "BOT_TOKEN=${{ secrets.BOT_TOKEN }}" >> $GITHUB_ENV
       - name: Build Jar
         run: mvn package -pl bot -am
       - name: Build Image
