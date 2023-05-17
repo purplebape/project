@@ -1,7 +1,7 @@
 app:
   bot:
     name: "tinkoff-bot"
-    token: "5766916823:AAH-or1c4F7qXaKzvb8UeELQFmY474Gfbv0"
+    token:
   scrapper:
     url: "http://localhost:8080"
   rabbit-queue:
