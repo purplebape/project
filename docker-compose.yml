@@ -69,6 +69,16 @@ services:
       - GF_USERS_ALLOW_SIGN_UP=false
     network_mode: host
 
+  bot-app:
+    image: ghcr.io/purplebape/bot-app
+    container_name: bot-app
+    network_mode: host
+
+  scrapper-app:
+    image: ghcr.io/purplebape/scrapper-app
+    container_name: scrapper-app
+    network_mode: host
+
 volumes:
   rabbitmq:
   scrapper-postgres:
