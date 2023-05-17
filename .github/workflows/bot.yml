@@ -21,6 +21,9 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
+      - name: Substitute BOT_TOKEN in application.yml
+        run: |
+          sed -i "s/{{BOT_TOKEN}}/${{ secrets.BOT_TOKEN }}/g" application.yml
       - name: Build Jar
         run: mvn package -pl bot -am
       - name: Build Image

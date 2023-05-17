@@ -1,7 +1,8 @@
 app:
   bot:
     name: "tinkoff-bot"
-    token: ${{ secrets.BOT_TOKEN }}
+    # {{BOT_TOKEN}}
+    token: ${BOT_TOKEN}
   scrapper:
     url: "http://localhost:8080"
   rabbit-queue:
