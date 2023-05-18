@@ -27,8 +27,7 @@ public class TrackerBot extends TelegramLongPollingBot {
     private final Counter messageCounter;
 
     public TrackerBot(ApplicationConfiguration config, MessageHandler messageHandler,
-        List<AbstractPublicCommand> commands, MeterRegistry meterRegistry)
-    {
+        List<AbstractPublicCommand> commands, MeterRegistry meterRegistry) {
         super(config.getBot().getToken());
         this.messageHandler = messageHandler;
         this.config = config;

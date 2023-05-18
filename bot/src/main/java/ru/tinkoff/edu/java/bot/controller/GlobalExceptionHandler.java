@@ -29,7 +29,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return buildError(ex, HttpStatus.INTERNAL_SERVER_ERROR, SERVER_ERROR_CODE, SERVER_ERROR_DESCRIPTION);
     }
 
-    private ResponseEntity<ApiErrorResponse> buildError(Exception exception, HttpStatus httpStatus, String code, String description) {
+    private ResponseEntity<ApiErrorResponse> buildError(Exception exception, HttpStatus httpStatus,
+        String code, String description) {
         return new ResponseEntity<>(
                 new ApiErrorResponse(description, code, exception.toString(), exception.getMessage(),
                         Arrays.stream(exception.getStackTrace()).map(Objects::toString).toList()),
