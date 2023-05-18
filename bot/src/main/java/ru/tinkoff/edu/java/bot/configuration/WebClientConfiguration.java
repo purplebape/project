@@ -13,10 +13,10 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 import ru.tinkoff.edu.java.bot.webClient.ScrapperWebClient;
 
 @Configuration
-public class WebClientConfig {
+public class WebClientConfiguration {
     private final ExchangeStrategies exchangeStrategies;
 
-    public WebClientConfig(ObjectMapper objectMapper) {
+    public WebClientConfiguration(ObjectMapper objectMapper) {
         exchangeStrategies = ExchangeStrategies
                 .builder()
                 .codecs(clientDefaultCodecsConfigurer -> {
@@ -30,7 +30,7 @@ public class WebClientConfig {
     }
 
     @Bean
-    public ScrapperWebClient gitHubWebClient(ApplicationConfig config) {
+    public ScrapperWebClient gitHubWebClient(ApplicationConfiguration config) {
         return buildWebClient(config.getScrapper().getUrl(), ScrapperWebClient.class);
     }
 

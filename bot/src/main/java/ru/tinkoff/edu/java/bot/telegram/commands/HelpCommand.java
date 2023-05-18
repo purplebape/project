@@ -27,9 +27,8 @@ public class HelpCommand extends AbstractPublicCommand {
 
     @Override
     public SendMessage handle(@NotNull Message message) {
-        return new SendMessage(
-                message.getChatId().toString(),
-                "Описание команд: \n" + Strings.join(commandsDescription, '\n')
+        return new SendMessage(message.getChatId().toString(),
+            "Описание команд: \n" + Strings.join(commandsDescription, '\n')
         );
     }
 

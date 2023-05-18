@@ -18,7 +18,7 @@ import ru.tinkoff.edu.java.parser.ParserConfig;
         TelegramBotStarterConfiguration.class,
         ParserConfig.class
 })
-public class ApplicationConfig {
+public class ApplicationConfiguration {
     @NotNull
     private Bot bot;
     @NotNull

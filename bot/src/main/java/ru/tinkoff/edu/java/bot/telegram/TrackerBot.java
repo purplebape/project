@@ -13,7 +13,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.commands.BotCommand;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import ru.tinkoff.edu.java.bot.configuration.ApplicationConfig;
+import ru.tinkoff.edu.java.bot.configuration.ApplicationConfiguration;
 import ru.tinkoff.edu.java.bot.exception.SendingMessageException;
 import ru.tinkoff.edu.java.bot.model.controller.LinkUpdateRequest;
 import ru.tinkoff.edu.java.bot.telegram.commands.AbstractPublicCommand;
@@ -21,17 +21,14 @@ import ru.tinkoff.edu.java.bot.telegram.commands.AbstractPublicCommand;
 @Slf4j
 @Component
 public class TrackerBot extends TelegramLongPollingBot {
-    private final ApplicationConfig config;
+    private final ApplicationConfiguration config;
     private final MessageHandler messageHandler;
     private final List<AbstractPublicCommand> commands;
     private final Counter messageCounter;
 
-    public TrackerBot(
-        ApplicationConfig config,
-        MessageHandler messageHandler,
-        List<AbstractPublicCommand> commands,
-        MeterRegistry meterRegistry
-    ) {
+    public TrackerBot(ApplicationConfiguration config, MessageHandler messageHandler,
+        List<AbstractPublicCommand> commands, MeterRegistry meterRegistry)
+    {
         super(config.getBot().getToken());
         this.messageHandler = messageHandler;
         this.config = config;
@@ -41,10 +38,7 @@ public class TrackerBot extends TelegramLongPollingBot {
 
     @PostConstruct
     private void init() {
-        List<BotCommand> botCommands = commands
-            .stream()
-            .map(AbstractPublicCommand::toBotCommand)
-            .toList();
+        List<BotCommand> botCommands = commands.stream().map(AbstractPublicCommand::toBotCommand).toList();
         SetMyCommands setMyCommands = new SetMyCommands();
         setMyCommands.setCommands(botCommands);
         try {
@@ -66,7 +60,7 @@ public class TrackerBot extends TelegramLongPollingBot {
                 log.error(ex.toString());
                 sendMessage = new SendMessage(
                     message.getChatId().toString(),
-                    "Sorry, internal error happened"
+                    "Internal error"
                 );
             }
             try {
@@ -89,10 +83,7 @@ public class TrackerBot extends TelegramLongPollingBot {
 
     private void sendMessage(Long chatId, String text) {
         try {
-            SendMessage sendMessage = SendMessage.builder()
-                .chatId(chatId)
-                .text(text)
-                .build();
+            SendMessage sendMessage = SendMessage.builder().chatId(chatId).text(text).build();
             this.execute(sendMessage);
         } catch (TelegramApiException e) {
             throw new SendingMessageException(chatId, e);

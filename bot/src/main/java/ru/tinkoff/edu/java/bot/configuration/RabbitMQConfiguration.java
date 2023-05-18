@@ -20,14 +20,14 @@ import ru.tinkoff.edu.java.bot.telegram.TrackerBot;
 
 @Configuration
 @ConditionalOnProperty(prefix = "app", name = "rabbit-queue")
-public class RabbitMQConfig {
+public class RabbitMQConfiguration {
     private final String exchangeName;
     private final String queueName;
     private final String routingKey;
 
     private final static String DLQ_SUFFIX = ".dlq";
 
-    public RabbitMQConfig(ApplicationConfig config) {
+    public RabbitMQConfiguration(ApplicationConfiguration config) {
         this.exchangeName = config.getRabbitQueue().getExchangeName();
         this.queueName = config.getRabbitQueue().getQueueName();
         this.routingKey = config.getRabbitQueue().getRoutingKey();
@@ -57,17 +57,12 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue deadLetterQueue() {
-        return QueueBuilder
-            .durable(queueName + DLQ_SUFFIX)
-            .build();
+        return QueueBuilder.durable(queueName + DLQ_SUFFIX).build();
     }
 
     @Bean
     public Binding deadLetterbinding(Queue deadLetterQueue, DirectExchange deadLetterExchange) {
-        return BindingBuilder
-            .bind(deadLetterQueue)
-            .to(deadLetterExchange)
-            .with(routingKey + DLQ_SUFFIX);
+        return BindingBuilder.bind(deadLetterQueue).to(deadLetterExchange).with(routingKey + DLQ_SUFFIX);
     }
 
     @Bean

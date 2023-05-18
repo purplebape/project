@@ -24,17 +24,11 @@ public interface ScrapperWebClient {
     void deleteChat(@PathVariable("id") Long id);
 
     @PostExchange("/links/{id}")
-    LinkResponse createLink(
-            @PathVariable("id") Long id,
-            @RequestBody AddLinkRequest request
-    );
+    LinkResponse createLink(@PathVariable("id") Long id, @RequestBody AddLinkRequest request);
 
     @GetExchange("/links/{id}")
     ListLinksResponse getAllLinks(@PathVariable("id") Long id);
 
     @DeleteExchange("/links/{id}")
-    LinkResponse deleteLink(
-            @PathVariable("id") Long id,
-            @RequestBody RemoveLinkRequest request
-    );
+    LinkResponse deleteLink(@PathVariable("id") Long id, @RequestBody RemoveLinkRequest request);
 }

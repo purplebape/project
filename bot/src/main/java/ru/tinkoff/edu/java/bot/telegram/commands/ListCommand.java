@@ -40,12 +40,7 @@ public class ListCommand extends AbstractPublicCommand {
     }
 
     private String getFormattedText(ListLinksResponse response) {
-        List<String> links = response
-                .links()
-                .stream()
-                .map(LinkResponse::link)
-                .map(URI::toString)
-                .toList();
+        List<String> links = response.links().stream().map(LinkResponse::link).map(URI::toString).toList();
         return "Список текущих отслеживаемых ссылок: \n" + links
                 .stream()
                 .map(link -> "- " + link)
