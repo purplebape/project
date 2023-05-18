@@ -5,7 +5,6 @@ public enum GitHubEventType {
     PushEvent("Commit was pushed"),
     IssueCommentEvent("Issue was commented"),
     PullRequestReviewCommentEvent("Pull request review was commented"),
-
     UnknownEvent("Some update happened");
 
     GitHubEventType(String value) {

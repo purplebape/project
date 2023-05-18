@@ -16,17 +16,12 @@ import ru.tinkoff.edu.java.scrapper.service.domain.api.ChatService;
 public class TgChatController {
     private final ChatService chatService;
 
-    @PostMapping(
-            path = "/{id}"
-    )
+    @PostMapping(path = "/{id}")
     public void create(@PathVariable("id") Long id) {
-
         chatService.register(id);
     }
 
-    @DeleteMapping(
-            path = "/{id}"
-    )
+    @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable("id") Long id) {
         chatService.unregister(id);
     }

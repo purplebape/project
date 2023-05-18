@@ -8,10 +8,7 @@ import org.springframework.web.service.annotation.HttpExchange;
 import reactor.core.publisher.Mono;
 import ru.tinkoff.edu.java.scrapper.model.client.GitHubEventResponse;
 
-@HttpExchange(
-        accept = MediaType.APPLICATION_JSON_VALUE,
-        contentType = MediaType.APPLICATION_JSON_VALUE
-)
+@HttpExchange(accept = MediaType.APPLICATION_JSON_VALUE, contentType = MediaType.APPLICATION_JSON_VALUE)
 public interface GitHubWebClient {
     @GetExchange("/repos/{owner}/{repo}/events")
     Mono<List<GitHubEventResponse>> fetchEvents(

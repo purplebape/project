@@ -15,28 +15,17 @@ import ru.tinkoff.edu.java.scrapper.model.controller.ApiErrorResponse;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private static final String CLIENT_ERROR_CODE = "client";
     private static final String SERVER_ERROR_CODE = "server";
-
     private static final String CLIENT_ERROR_DESCRIPTION = "Wrong client action";
     private static final String SERVER_ERROR_DESCRIPTION = "Internal error";
 
     @ExceptionHandler(IllegalArgumentException.class)
     protected ResponseEntity<ApiErrorResponse> handleIllegalArgumentException(IllegalArgumentException ex) {
-        return buildError(
-                ex,
-                HttpStatus.BAD_REQUEST,
-                CLIENT_ERROR_CODE,
-                CLIENT_ERROR_DESCRIPTION
-        );
+        return buildError(ex, HttpStatus.BAD_REQUEST, CLIENT_ERROR_CODE, CLIENT_ERROR_DESCRIPTION);
     }
 
     @ExceptionHandler
     protected ResponseEntity<ApiErrorResponse> handleOtherErrors(Exception ex) {
-        return buildError(
-                ex,
-                HttpStatus.INTERNAL_SERVER_ERROR,
-                SERVER_ERROR_CODE,
-                SERVER_ERROR_DESCRIPTION
-        );
+        return buildError(ex, HttpStatus.INTERNAL_SERVER_ERROR, SERVER_ERROR_CODE, SERVER_ERROR_DESCRIPTION);
     }
 
     private ResponseEntity<ApiErrorResponse> buildError(

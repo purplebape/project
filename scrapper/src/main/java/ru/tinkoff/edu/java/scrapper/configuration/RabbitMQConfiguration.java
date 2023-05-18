@@ -15,14 +15,14 @@ import ru.tinkoff.edu.java.scrapper.service.queue.ScrapperQueueProducer;
 
 @Configuration
 @ConditionalOnProperty(prefix = "app", name = "use-queue", havingValue = "true")
-public class RabbitMQConfig {
+public class RabbitMQConfiguration {
     private final String exchangeName;
     private final String queueName;
     private final String routingKey;
 
     private final static String DLQ_SUFFIX = ".dlq";
 
-    public RabbitMQConfig(ApplicationConfig config) {
+    public RabbitMQConfiguration(ApplicationConfiguration config) {
         this.exchangeName = config.getRabbitQueue().getExchangeName();
         this.queueName = config.getRabbitQueue().getQueueName();
         this.routingKey = config.getRabbitQueue().getRoutingKey();
@@ -49,14 +49,11 @@ public class RabbitMQConfig {
 
     @Bean
     public Binding binding(Queue queue, DirectExchange exchange) {
-        return BindingBuilder
-                .bind(queue)
-                .to(exchange)
-                .with(routingKey);
+        return BindingBuilder.bind(queue).to(exchange).with(routingKey);
     }
 
     @Bean
-    public ScrapperQueueProducer scrapperQueueProducer(RabbitTemplate rabbitTemplate, ApplicationConfig config) {
+    public ScrapperQueueProducer scrapperQueueProducer(RabbitTemplate rabbitTemplate, ApplicationConfiguration config) {
         return new ScrapperQueueProducer(rabbitTemplate, config);
     }
 }

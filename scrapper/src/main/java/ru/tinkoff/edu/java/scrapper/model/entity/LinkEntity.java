@@ -23,15 +23,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class LinkEntity {
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "linkIdSeq"
-    )
-    @SequenceGenerator(
-            name = "linkIdSeq",
-            sequenceName = "link_id_seq",
-            allocationSize = 1
-    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "linkIdSeq")
+    @SequenceGenerator(name = "linkIdSeq", sequenceName = "link_id_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "url", nullable = false, unique = true)

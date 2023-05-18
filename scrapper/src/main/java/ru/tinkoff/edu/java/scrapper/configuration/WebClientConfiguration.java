@@ -15,11 +15,11 @@ import ru.tinkoff.edu.java.scrapper.client.GitHubWebClient;
 import ru.tinkoff.edu.java.scrapper.client.StackOverflowWebClient;
 
 @Configuration
-public class WebClientConfig {
+public class WebClientConfiguration {
     private final ExchangeStrategies exchangeStrategies;
     private static final Integer MAX_BUFF_SIZE = 1024 * 1024 * 10;
 
-    public WebClientConfig(ObjectMapper objectMapper) {
+    public WebClientConfiguration(ObjectMapper objectMapper) {
         exchangeStrategies = ExchangeStrategies
                 .builder()
                 .codecs(clientDefaultCodecsConfigurer -> {
@@ -34,17 +34,17 @@ public class WebClientConfig {
     }
 
     @Bean
-    public GitHubWebClient gitHubWebClient(ApplicationConfig config) {
+    public GitHubWebClient gitHubWebClient(ApplicationConfiguration config) {
         return buildWebClient(config.getGitHub().getUrl(), GitHubWebClient.class);
     }
 
     @Bean
-    public StackOverflowWebClient stackOverflowWebClient(ApplicationConfig config) {
+    public StackOverflowWebClient stackOverflowWebClient(ApplicationConfiguration config) {
         return buildWebClient(config.getStackOverflow().getUrl(), StackOverflowWebClient.class);
     }
 
     @Bean
-    public BotWebClient botWebClient(ApplicationConfig config) {
+    public BotWebClient botWebClient(ApplicationConfiguration config) {
         return buildWebClient(config.getBot().getUrl(), BotWebClient.class);
     }
 
