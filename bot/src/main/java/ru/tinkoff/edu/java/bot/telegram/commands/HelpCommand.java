@@ -13,7 +13,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 @Order(1)
 public class HelpCommand extends AbstractPublicCommand {
     private static final String COMMAND = "/help";
-    private static final String DESCRIPTION = "показать список команд";
+    private static final String DESCRIPTION = "Показать список команд";
 
     private final List<String> commandsDescription;
 

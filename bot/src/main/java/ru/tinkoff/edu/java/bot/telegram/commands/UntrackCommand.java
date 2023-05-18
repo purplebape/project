@@ -21,7 +21,7 @@ public class UntrackCommand extends AbstractPublicCommand {
     private final LinkHandlerChain linkHandler;
 
     private static final String COMMAND = "/untrack";
-    private static final String DESCRIPTION = "прекратить отслеживание ссылки";
+    private static final String DESCRIPTION = "Прекратить отслеживание ссылки";
     private static final Pattern PATTERN = Pattern.compile("^\\s*/untrack (\\S+)\\s*$");
     private static final String SUCCESS_RESPONSE = "Ссылка удалена из списка.";
     private static final String WRONG_FORMAT_RESPONSE = "Используйте правильный формат: /untrack <ссылка>";

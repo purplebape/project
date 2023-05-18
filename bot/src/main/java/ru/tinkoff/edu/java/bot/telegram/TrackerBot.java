@@ -59,7 +59,7 @@ public class TrackerBot extends TelegramLongPollingBot {
                 log.error(ex.toString());
                 sendMessage = new SendMessage(
                     message.getChatId().toString(),
-                    "Internal error"
+                    "Внутренняя ошибка. Попробуйте запустить бота повторно: /start"
                 );
             }
             try {

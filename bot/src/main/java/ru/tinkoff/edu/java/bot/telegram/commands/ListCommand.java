@@ -18,7 +18,7 @@ public class ListCommand extends AbstractPublicCommand {
     private final ScrapperWebService webService;
 
     private static final String COMMAND = "/list";
-    private static final String DESCRIPTION = "показать список отслеживаемых ссылок";
+    private static final String DESCRIPTION = "Показать список отслеживаемых ссылок";
     private static final String EMPTY_LINKS_LIST_MESSAGE =
             "Отслеживаемых ссылок ещё нет. Введите /track <ссылка> для добавления.";
 

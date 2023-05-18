@@ -21,7 +21,7 @@ public class TrackCommand extends AbstractPublicCommand {
     private final LinkHandlerChain linkHandler;
 
     private static final String COMMAND = "/track";
-    private static final String DESCRIPTION = "начать отслеживание ссылки";
+    private static final String DESCRIPTION = "Начать отслеживание ссылки";
     private static final Pattern PATTERN = Pattern.compile("^\\s*/track (\\S+)\\s*$");
     private static final String SUCCESS_RESPONSE = "Ссылка добавлена в список.";
     private static final String WRONG_FORMAT_RESPONSE = "Используйте правильный формат: /track <ссылка>";
