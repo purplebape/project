@@ -34,17 +34,17 @@ public class WebClientConfiguration {
     }
 
     @Bean
-    public GitHubWebClient gitHubWebClient(ApplicationConfiguration config) {
+    public GitHubWebClient gitHubWebClient(ApplicationConfig config) {
         return buildWebClient(config.getGitHub().getUrl(), GitHubWebClient.class);
     }
 
     @Bean
-    public StackOverflowWebClient stackOverflowWebClient(ApplicationConfiguration config) {
+    public StackOverflowWebClient stackOverflowWebClient(ApplicationConfig config) {
         return buildWebClient(config.getStackOverflow().getUrl(), StackOverflowWebClient.class);
     }
 
     @Bean
-    public BotWebClient botWebClient(ApplicationConfiguration config) {
+    public BotWebClient botWebClient(ApplicationConfig config) {
         return buildWebClient(config.getBot().getUrl(), BotWebClient.class);
     }
 

@@ -17,7 +17,7 @@ import ru.tinkoff.edu.java.parser.ParserConfig;
 @ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
 @Configuration
 @Import(value = {ParserConfig.class})
-public class ApplicationConfiguration {
+public class ApplicationConfig {
     @NotNull
     private Scheduler scheduler;
     @NotNull

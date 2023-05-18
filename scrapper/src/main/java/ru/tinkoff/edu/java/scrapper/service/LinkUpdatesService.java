@@ -10,7 +10,7 @@ import ru.tinkoff.edu.java.parser.linkData.GitHubLinkData;
 import ru.tinkoff.edu.java.parser.linkData.LinkData;
 import ru.tinkoff.edu.java.parser.linkData.StackOverflowLinkData;
 import ru.tinkoff.edu.java.parser.linkHandler.LinkHandlerChain;
-import ru.tinkoff.edu.java.scrapper.configuration.ApplicationConfiguration;
+import ru.tinkoff.edu.java.scrapper.configuration.ApplicationConfig;
 import ru.tinkoff.edu.java.scrapper.exception.InternalError;
 import ru.tinkoff.edu.java.scrapper.model.bot.LinkUpdateRequest;
 import ru.tinkoff.edu.java.scrapper.model.client.UpdatesInfo;
@@ -24,7 +24,7 @@ import ru.tinkoff.edu.java.scrapper.service.stackoverflow.StackOverflowWebServic
 @Service
 @RequiredArgsConstructor
 public class LinkUpdatesService {
-    private final ApplicationConfiguration config;
+    private final ApplicationConfig config;
     private final LinkHandlerChain handlerChain;
     private final LinkService linkService;
     private final SubscriptionService subscriptionService;

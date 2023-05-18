@@ -2,7 +2,7 @@ package ru.tinkoff.edu.java.scrapper.service.queue;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import ru.tinkoff.edu.java.scrapper.configuration.ApplicationConfiguration;
+import ru.tinkoff.edu.java.scrapper.configuration.ApplicationConfig;
 import ru.tinkoff.edu.java.scrapper.model.bot.LinkUpdateRequest;
 import ru.tinkoff.edu.java.scrapper.service.UpdatesSender;
 
@@ -12,7 +12,7 @@ public class ScrapperQueueProducer implements UpdatesSender {
     private final String exchangeName;
     private final String routingKey;
 
-    public ScrapperQueueProducer(RabbitTemplate rabbitTemplate, ApplicationConfiguration config) {
+    public ScrapperQueueProducer(RabbitTemplate rabbitTemplate, ApplicationConfig config) {
         this.rabbitTemplate = rabbitTemplate;
         this.exchangeName = config.getRabbitQueue().getExchangeName();
         this.routingKey = config.getRabbitQueue().getRoutingKey();

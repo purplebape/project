@@ -22,7 +22,7 @@ public class RabbitMQConfiguration {
 
     private final static String DLQ_SUFFIX = ".dlq";
 
-    public RabbitMQConfiguration(ApplicationConfiguration config) {
+    public RabbitMQConfiguration(ApplicationConfig config) {
         this.exchangeName = config.getRabbitQueue().getExchangeName();
         this.queueName = config.getRabbitQueue().getQueueName();
         this.routingKey = config.getRabbitQueue().getRoutingKey();
@@ -53,7 +53,7 @@ public class RabbitMQConfiguration {
     }
 
     @Bean
-    public ScrapperQueueProducer scrapperQueueProducer(RabbitTemplate rabbitTemplate, ApplicationConfiguration config) {
+    public ScrapperQueueProducer scrapperQueueProducer(RabbitTemplate rabbitTemplate, ApplicationConfig config) {
         return new ScrapperQueueProducer(rabbitTemplate, config);
     }
 }
