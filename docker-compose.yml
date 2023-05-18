@@ -72,6 +72,8 @@ services:
   bot-app:
     image: ghcr.io/purplebape/bot-app
     container_name: bot-app
+    environment:
+      - BOT_TOKEN=${BOT_TOKEN}
     network_mode: host
 
   scrapper-app:
