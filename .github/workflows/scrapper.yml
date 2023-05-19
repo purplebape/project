@@ -10,7 +10,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: scrapper-app:latest
+  IMAGE_NAME: scrapper:latest
 
 jobs:
   build:
